@@ -1,0 +1,679 @@
+﻿@model OnlineShop.Models.Db.Product
+@{
+    List<OnlineShop.Models.Db.ProductGalery>? gallery = new List<OnlineShop.Models.Db.ProductGalery>();
+    List<Product> NewProducts = new List<Product>();
+    List<Comment> comments = new List<Comment>();
+    if (ViewData["NewProducts"] != null)
+    {
+        NewProducts = ViewData["NewProducts"] as List<Product>;
+    }
+    if(  ViewData["gallery"] != null)
+    {
+        gallery = ViewData["gallery"] as List<ProductGalery>;
+    }
+    if (ViewData["comments"] != null)
+    {
+        comments = ViewData["comments"] as List<Comment>;
+    }
+}
+
+<!--header area start-->
+<header class="header_section border-bottom">
+    <div class="header_top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="header_top_inner d-flex justify-content-between align-items-center">
+                        <div class="header_contact_info">
+                            <ul class="d-flex">
+                                <li class="text-white"> <i class="icons icon-phone"></i> <a href="tel:+05483716566">+054 8371 65 66</a></li>
+                                <li class="text-white"> <i class="icon-envelope-letter icons"></i> <a href="#">uthrstore@domain.com</a></li>
+                            </ul>
+                        </div>
+                        <div class="free_shipping_text">
+                            <p class="text-white">Free shipping worldwide for orders over $99 <a href="#">Learn More</a></p>
+                        </div>
+                        <div class="header_top_sidebar d-flex align-items-center">
+                            <div class="header_social d-flex">
+                                <span>Follow us</span>
+                                <ul class="d-flex">
+                                    <li><a href="#"><i class="icon-social-twitter icons"></i></a></li>
+                                    <li><a href="#"><i class="icon-social-facebook icons"></i></a></li>
+                                    <li><a href="#"><i class="icon-social-instagram icons"></i></a></li>
+                                    <li><a href="#"><i class="icon-social-youtube icons"></i></a></li>
+                                    <li><a href="#"><i class="icon-social-pinterest icons"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="language_currency">
+                                <ul class="d-flex">
+                                    <li class="language">
+                                        <a href="#"> Eng <i class="icon-right ion-ios-arrow-down"></i></a>
+                                        <ul class="dropdown_language">
+                                            <li><a href="#">French</a></li>
+                                            <li><a href="#">Spanish</a></li>
+                                            <li><a href="#">Russian</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="currency">
+                                        <a href="#"> USd <i class="icon-right ion-ios-arrow-down"></i></a>
+                                        <ul class="dropdown_currency">
+                                            <li><a href="#">€ Euro</a></li>
+                                            <li><a href="#">£ Pound Sterling</a></li>
+                                            <li><a href="#">$ US Dollar</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- page search box -->
+    <div class="page_search_box">
+        <div class="search_close">
+            <i class="ion-close-round"></i>
+        </div>
+        <form class="border-bottom" action="#">
+            <input class="border-0" placeholder="Search products..." type="text">
+            <button type="submit"><span class="icon-magnifier icons"></span></button>
+        </form>
+    </div>
+
+</header>
+<!--header area end-->
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area breadcrumbs_product mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="index.html">home</a></li>
+                        <li><a href="/products">shop</a></li>
+                        <li>@Model.Title</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!--product details start-->
+<section class="product_details mb-135">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product_zoom_gallery">
+                    <div class="zoom_gallery_inner d-flex">
+                        <div class="zoom_tab_img">
+                            <a class="zoom_tabimg_list" href="javascript:void(0)"><img src="/images/banners/@Model.ImageName" alt="@Model.ImageName"></a>
+                            @if(gallery.Any())
+                            {
+                                @foreach (var item in gallery.OrderBy(x=> x.Id))
+                                {
+                                    <a class="zoom_tabimg_list" href="javascript:void(0)"><img src="/images/banners/@item.ImageName" alt="@item.ImageName"></a>
+                                }
+                            }                        
+                        </div>
+                        <div class="product_zoom_main_img">
+                            <div class="product_zoom_thumb">
+                                <img data-image="/images/banners/@Model.ImageName" src="/images/banners/@Model.ImageName" alt="@Model.ImageName">
+                            </div>
+                            @if (gallery.Any())
+                            {
+                                @foreach (var item in gallery.OrderBy(x => x.Id))
+                                {
+                                    <div class="product_zoom_thumb">
+                                        <img data-image="/images/banners/@item.ImageName" src="/images/banners/@item.ImageName" alt="@item.ImageName">
+                                    </div>
+                                }
+                            }                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product_d_right">
+                    <form action="#">
+                        <h1>@Model.Title</h1>
+                        <div class="product_ratting_review d-flex align-items-center">
+                            <div class=" product_ratting">
+                                <ul class="d-flex">
+                                    <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                    <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                    <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                    <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                    <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product_review">
+                                <ul class="d-flex">
+                                    <li>@comments.Count Reviews</li>
+                                    <li>Write your review</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="price_box">
+                            <span class="current_price">
+                                @if (Model.Discount != null)
+                                {
+                                    <span class="current_price">
+                                        @{
+                                            decimal? discounted_price;
+                                            discounted_price = Model.Price.GetValueOrDefault(0) - Model.Discount.GetValueOrDefault(0);
+                                        }
+                                        $@discounted_price.GetValueOrDefault(0).ToString("F")
+                                    </span>
+                                    <span class="old_price">@Model.Price.GetValueOrDefault(0).ToString("F")</span>
+                                }
+                                else
+                                {
+                                    <span class="current_price">@Model.Price.GetValueOrDefault(0).ToString("F")</span>
+                                }
+                            </span>
+                        </div>
+                        <div class="product_availalbe">
+                            <ul class="d-flex">
+                                <li><i class="icon-layers icons"></i> Only <span>@Model.Qty</span> left </li>
+                                <li>Availalbe: 
+                                    @if(Model.Qty > 0 )
+                                    {
+                                        <span class="stock">In Stock</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="stock" style="color:red">No Availalbe</span>
+                                    }
+
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="product_desc">
+                            <p>@Model.Description  </p>
+                        </div>
+                        <div class="product_variant">
+                            <div class="filter__list widget_color d-flex align-items-center">
+                                <h3>Select Color</h3>
+                                <ul>
+                                    @if (!string.IsNullOrEmpty(Model.Color))
+                                    {
+                                        var selectedColor = Model.Color;
+
+                                        <li>
+                                            <input type="radio" id="colorRed" name="Color" value="Red" @(selectedColor == "Red" ? "checked" : "") style="display:none;">
+                                            <span class="checkmark color1" style="background-color:red;" onclick="toggleRadio('colorRed')"></span>
+                                        </li>
+                                        <li>
+                                            <input type="radio" id="colorBlue" name="Color" value="Blue" @(selectedColor == "Blue" ? "checked" : "") style="display:none;">
+                                            <span class="checkmark color2" style="background-color:blue;" onclick="toggleRadio('colorBlue')"></span>
+                                        </li>
+                                        <li>
+                                            <input type="radio" id="colorGreen" name="Color" value="Green" @(selectedColor == "Green" ? "checked" : "") style="display:none;">
+                                            <span class="checkmark color3" style="background-color:green;" onclick="toggleRadio('colorGreen')"></span>
+                                        </li>
+                                        <li>
+                                            <input type="radio" id="colorYellow" name="Color" value="Yellow" @(selectedColor == "Yellow" ? "checked" : "") style="display:none;">
+                                            <span class="checkmark color4" style="background-color:yellow;" onclick="toggleRadio('colorYellow')"></span>
+                                        </li>
+                                        <li>
+                                            <input type="radio" id="colorBlack" name="Color" value="Black" @(selectedColor == "Black" ? "checked" : "") style="display:none;">
+                                            <span class="checkmark color5" style="background-color:black;" onclick="toggleRadio('colorBlack')"></span>
+                                        </li>
+                                        <li>
+                                            <input type="radio" id="colorWhite" name="Color" value="White" @(selectedColor == "White" ? "checked" : "") style="display:none;">
+                                            <span class="checkmark color6" style="background-color:white;" onclick="toggleRadio('colorWhite')"></span>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <!-- Không có màu nào được chọn -->
+                                        <li>
+                                            <input type="radio" id="colorRed" name="Color" value="Red" style="display:none;">
+                                            <span class="checkmark color1" style="background-color:red;" onclick="toggleRadio('colorRed')"></span>
+                                        </li>
+                                        <li>
+                                            <input type="radio" id="colorBlue" name="Color" value="Blue" style="display:none;">
+                                            <span class="checkmark color2" style="background-color:blue;" onclick="toggleRadio('colorBlue')"></span>
+                                        </li>
+                                        <li>
+                                            <input type="radio" id="colorGreen" name="Color" value="Green" style="display:none;">
+                                            <span class="checkmark color3" style="background-color:green;" onclick="toggleRadio('colorGreen')"></span>
+                                        </li>
+                                        <li>
+                                            <input type="radio" id="colorYellow" name="Color" value="Yellow" style="display:none;">
+                                            <span class="checkmark color4" style="background-color:yellow;" onclick="toggleRadio('colorYellow')"></span>
+                                        </li>
+                                        <li>
+                                            <input type="radio" id="colorBlack" name="Color" value="Black" style="display:none;">
+                                            <span class="checkmark color5" style="background-color:black;" onclick="toggleRadio('colorBlack')"></span>
+                                        </li>
+                                        <li>
+                                            <input type="radio" id="colorWhite" name="Color" value="White" style="display:none;">
+                                            <span class="checkmark color6" style="background-color:white;" onclick="toggleRadio('colorWhite')"></span>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+
+                            <div class="filter__list widget_size d-flex align-items-center">
+                                <h3>select size</h3>
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0)">S </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"> M</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">L</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"> XL</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">XLL</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="variant_quantity_btn d-flex">
+                                @if(Model.Qty > 0)
+                                {
+                                    
+                                    <div class="pro-qty border">
+                                        <input min="1" max="100" type="text" value="1">
+                                    </div>
+                                    <button class="button btn btn-primary" type="submit"><i class="ion-android-add"></i> Add To Cart</button>
+                                    <a class="wishlist" href="#"><i class="ion-ios-heart"></i></a>
+
+                                }
+                                else
+                                {
+                                    <div class="pro-qty border">
+                                        <input min="1" max="100" type="text" value="1">
+                                    </div>
+                                    <button class="button btn btn-primary" type="submit" disabled>
+                                        <i class="ion-android-add"></i> Add To Cart
+                                    </button>
+                                    <a class="wishlist" href="#"><i class="ion-ios-heart"></i></a>
+                                }
+
+                            </div>
+                        </div>
+                        <div class="product_sku">
+                            <p><span>SKU: </span> PRO#@Model.Id</p>
+                        </div>
+                        <div class="product_tags d-flex">
+                            @if(!string.IsNullOrEmpty(Model.Tags))
+                            {
+                                var tags = Model.Tags.Split(",");
+                                <span>tags: </span>
+                                <ul class="d-flex">
+                                    @foreach (var item in tags)
+                                    {
+                                        <li><a href="/products/SearchProducts?SearchText=@item">@item</a>,</li>
+                                    }
+                                    
+
+                                </ul>
+
+                            }
+                           
+                        </div>
+                        <div class="priduct_social d-flex">
+                            <span>SHARE: </span>
+                            <ul>
+                                <li><a href="#"><i class="ion-social-twitter"></i></a></li>
+                                <li><a href="#"><i class="ion-social-facebook"></i></a></li>
+                                <li><a href="#"><i class="ion-social-googleplus-outline"></i></a></li>
+                                <li><a href="#"><i class="ion-social-pinterest"></i></a></li>
+                                <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--product details end-->
+<!--product info start-->
+<div class="product_d_info mb-118">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="product_d_inner">
+                    <div class="product_info_button border-bottom">
+                        <ul class="nav" role="tablist">
+                            <li>
+                                <a class="active" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">Product Description</a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Reviews          </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tags" role="tab" aria-controls="tags" aria-selected="false">Tags </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#additional" role="tab" aria-controls="additional" aria-selected="false">Additional Information </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tabinfo" role="tab" aria-controls="tabinfo" aria-selected="false">Custom Tab Info  </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#video" role="tab" aria-controls="video" aria-selected="false">Custom Tab Video </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="info" role="tabpanel">
+                            <div class="product_info_content">
+                                @Html.Raw(Model.FullDesc)                         
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="reviews" role="tabpanel">
+                            <div class="reviews_wrapper">
+                                <h2>@comments.Count Review for @Model.Title</h2>
+                                @foreach (var item in comments)
+                                {
+                                    <div class="reviews_comment_box">
+                                        <div class="comment_thmb">
+                                            <img src="assets/img/blog/comment2.jpg" alt="">
+                                        </div>
+                                        <div class="comment_text">
+                                            <div class="reviews_meta">
+                                                <div class="star_rating">
+                                                    <ul class="d-flex">
+                                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                                <p><strong>@item.Name </strong>- @item.CreateDate</p>
+                                                <span>@item.CommentText</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                              
+                                <div class="comment_title">
+                                    <h2>Add a review </h2>
+                                    <p>Your email address will not be published.  Required fields are marked </p>
+                                </div>
+                                <div class="product_ratting mb-10">
+                                    <h3>Your rating</h3>
+                                    <ul class="d-flex">
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product_review_form">
+                                    <form  method="post" asp-action="SubmitComment" asp-controller="Products">
+                                        <input type="hidden" name="productId" value="@Model.Id" />
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label for="review_comment">Your review </label>
+                                                <textarea name="comment" id="review_comment"></textarea>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <label for="author">Name</label>
+                                                <input name="name" id="author" type="text">
+
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <label for="email">Email </label>
+                                                <input name="email" id="email" type="text">
+                                            </div>
+                                        </div>
+                                        @if(TempData["SuccessMessage"] != null)
+                                        {
+                                            <div class="alert alert-success" role="alert">
+                                                @TempData["SuccessMessage"]
+                                            </div>
+                                        }
+                                        @if (TempData["ErrorMessage"] != null)
+                                        {
+                                            <div class="alert alert-danger" role="alert">
+                                                @TempData["ErrorMessage"]
+                                            </div>
+                                        }
+                                        <button type="submit">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tags" role="tabpanel">
+                            <div class="product_info_content">
+                                <ul>
+                                    @if (!string.IsNullOrEmpty(Model.Tags))
+                                    {
+                                        var tags = Model.Tags.Split(",");                            
+                                            @foreach (var item in tags)
+                                            {
+                                                <li>@item</li>
+                                            }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="additional" role="tabpanel">
+                            <div class="product_d_table">
+                                <form action="#">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td class="first_child">Compositions</td>
+                                                <td>Polyester</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Styles</td>
+                                                <td>Girly</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Properties</td>
+                                                <td>Short Dress</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            <div class="product_info_content">
+                                <p>Fashion has been creating well-designed collections since 2010. The brand offers feminine designs delivering stylish separates and statement dresses which have since evolved into a full ready-to-wear collection in which every item is a vital part of a woman's wardrobe. The result? Cool, easy, chic looks with youthful elegance and unmistakable signature style. All the beautiful pieces are made in Italy and manufactured with the greatest attention. Now Fashion extends to a range of accessories including shoes, hats, belts and more!</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tabinfo" role="tabpanel">
+                            <div class="product_d_table">
+                                <form action="#">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td class="first_child">Compositions</td>
+                                                <td>Polyester</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Styles</td>
+                                                <td>Girly</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="first_child">Properties</td>
+                                                <td>Short Dress</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            <div class="product_info_content">
+                                <p>Fashion has been creating well-designed collections since 2010. The brand offers feminine designs delivering stylish separates and statement dresses which have since evolved into a full ready-to-wear collection in which every item is a vital part of a woman's wardrobe. The result? Cool, easy, chic looks with youthful elegance and unmistakable signature style. All the beautiful pieces are made in Italy and manufactured with the greatest attention. Now Fashion extends to a range of accessories including shoes, hats, belts and more!</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="video" role="tabpanel">
+                            <div class="product_tab_vidio text-center">
+                                <iframe width="729" height="410" src="@Model.VideoUrl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--product info end-->
+@if(NewProducts.Any())
+{
+    <section class="product_area related_products mb-118">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section_title mb-50">
+                        <h2>Related Products</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="product_container row">
+                <div class=" product_slick slick_slider_activation" data-slick='{
+                        "slidesToShow": 4,
+                        "slidesToScroll": 1,
+                        "arrows": true,
+                        "dots": false,
+                        "autoplay": false,
+                        "speed": 300,
+                        "infinite": true,
+                        "responsive":[
+                          {"breakpoint":992, "settings": { "slidesToShow": 3 } },
+                          {"breakpoint":768, "settings": { "slidesToShow": 2 } },
+                          {"breakpoint":300, "settings": { "slidesToShow": 1 } }
+                         ]
+                    }'>
+                    @foreach (var item in NewProducts)
+                    {
+                        <div class="col-lg-3">
+                            <article class="single_product">
+                                <figure>
+                                    <div class="product_thumb">
+                                        <a href="/products/ProductDetails/@item.Id">
+                                            <img class="primary_img" src="/images/banners/@item.ImageName" alt="consectetur">
+                                        </a>
+                                        @if (item.Discount != null && item.Price > 0)
+                                        {
+                                            decimal? discount_percentage;
+                                            discount_percentage = (item.Discount.GetValueOrDefault(0) / item.Price.GetValueOrDefault(0)) * 100;
+                                            <div class="product_label">
+                                                <span>Giãm Giá @discount_percentage.GetValueOrDefault(0).ToString("F0")%</span>
+                                            </div>
+                                        }
+                                        <div class="product_action">
+                                            <ul>
+                                                <li class="wishlist">
+                                                    <a href="#" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50"
+                                                       data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-heart icons"></i></a>
+                                                </li>
+
+                                                <li class="quick_view"><a data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
+                                                <li class="compare">
+                                                    <a data-tippy="Compare" href="#" data-tippy-inertia="true" data-tippy-delay="50"
+                                                       data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <figcaption class="product_content text-center">
+                                        <div class="product_ratting">
+                                            <ul class="d-flex justify-content-center">
+                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                <li><span>(4)</span></li>
+                                            </ul>
+                                        </div>
+                                        <h4 class="product_name"><a href="/products/ProductDetails/@item.Id">@item.Title</a></h4> 
+                                        <div class="price_box">
+                                            @if (item.Discount != null)
+                                            {
+                                                <span class="current_price">
+                                                    @{
+                                                        decimal? discounted_price;
+                                                        discounted_price = item.Price.GetValueOrDefault(0) - item.Discount.GetValueOrDefault(0);
+                                                    }
+                                                    $@discounted_price.GetValueOrDefault(0).ToString("F")
+                                                </span>
+                                                <span class="old_price">@item.Price.GetValueOrDefault(0).ToString("F")</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="current_price">@item.Price.GetValueOrDefault(0).ToString("F")</span>
+                                            }
+                                        </div>
+                                        <div class="add_to_cart">
+                                            <a class="btn btn-primary" href="#" data-tippy="Add To Cart" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
+                                        </div>
+                                    </figcaption>
+                                </figure>
+                            </article>
+                        </div>
+                    }
+                   
+     
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<!--product area start-->
+
+<!--product area end-->
+<!--newsletter section start-->
+<section class="newsletter_section newsletter_padding border-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="newsletter_inner d-flex justify-content-between align-items-center">
+                    <div class="newsletter_text">
+                        <h3>keep connected</h3>
+                        <p>Get updates by subscribe our weekly newsletter</p>
+                    </div>
+                    <div class="newsletter_subscribe">
+                        <form id="mc-form">
+                            <input class="border-0" id="mc-email" type="email" autocomplete="off" placeholder="Enter your email address">
+                            <i class="icon-envelope-open icons"></i>
+                            <button class="border-0" id="mc-submit">Subscribe</button>
+                        </form>
+                        <!-- mailchimp-alerts Start -->
+                        <div class="mailchimp-alerts text-centre">
+                            <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+                            <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+                            <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+                        </div><!-- mailchimp-alerts end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--newsletter section end-->
+<script>
+    function toggleRadio(id) {
+        const radios = document.querySelectorAll('input[name="Color"]');
+        radios.forEach(radio => {
+            if (radio.id === id) {
+                radio.checked = true; // Đánh dấu radio đã chọn
+            } else {
+                radio.checked = false; // Bỏ chọn các radio khác
+            }
+        });
+    }
+
+</script>

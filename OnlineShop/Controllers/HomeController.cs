@@ -19,7 +19,11 @@ namespace OnlineShop.Controllers
         public IActionResult Index()
         {
             var banners = _context.Banners.ToList();
-            ViewData[nameof(banners)] = banners;
+            ViewData["banners"] = banners;
+            var newProducts = _context.Products.OrderByDescending(x => x.Id).Take(8).ToList();
+            ViewData["newProducts"] = newProducts;
+            var bestSellingProducts = _context.BestSellingFinals.ToList();
+            ViewData["bestSellingProducts"] = bestSellingProducts;
             return View();
         }
 

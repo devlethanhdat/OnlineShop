@@ -1,13 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using OnlineShop.Models.Db;
 
 namespace OnlineShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+		private readonly OnlineShopContext _context;
+
+		public HomeController(OnlineShopContext context)
+		{
+			
+			_context = context;
+		}
+
+		public IActionResult Index()
         {
-            return View();
+			var bestSellingProducts = _context.BestSellingFinals.ToList();
+			ViewData["bestSellingProducts"] = bestSellingProducts;
+			return View();
         }
     }
 }

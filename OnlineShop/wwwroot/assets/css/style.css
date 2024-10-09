@@ -3457,7 +3457,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   }
 }
 .product_label span {
-  width: 50px;
+  width: 100px;
   height: 25px;
   line-height: 25px;
   text-align: center;

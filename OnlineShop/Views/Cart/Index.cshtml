@@ -1,0 +1,192 @@
+﻿ @model List<OnlineShop.Models.ViewModels.ProductCartViewModel>
+@if (Model != null && Model.Any())
+{
+    <!--header area start-->
+    <header class="header_section border-bottom">
+        <div class="header_top">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="header_top_inner d-flex justify-content-between align-items-center">
+                            <div class="header_contact_info">
+                                <ul class="d-flex">
+                                    <li class="text-white"> <i class="icons icon-phone"></i> <a href="tel:+05483716566">+054 8371 65 66</a></li>
+                                    <li class="text-white"> <i class="icon-envelope-letter icons"></i> <a href="#">uthrstore@domain.com</a></li>
+                                </ul>
+                            </div>
+                            <div class="free_shipping_text">
+                                <p class="text-white">Free shipping worldwide for orders over $99 <a href="#">Learn More</a></p>
+                            </div>
+                            <div class="header_top_sidebar d-flex align-items-center">
+                                <div class="header_social d-flex">
+                                    <span>Follow us</span>
+                                    <ul class="d-flex">
+                                        <li><a href="#"><i class="icon-social-twitter icons"></i></a></li>
+                                        <li><a href="#"><i class="icon-social-facebook icons"></i></a></li>
+                                        <li><a href="#"><i class="icon-social-instagram icons"></i></a></li>
+                                        <li><a href="#"><i class="icon-social-youtube icons"></i></a></li>
+                                        <li><a href="#"><i class="icon-social-pinterest icons"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="language_currency">
+                                    <ul class="d-flex">
+                                        <li class="language">
+                                            <a href="#"> Eng <i class="icon-right ion-ios-arrow-down"></i></a>
+                                            <ul class="dropdown_language">
+                                                <li><a href="#">French</a></li>
+                                                <li><a href="#">Spanish</a></li>
+                                                <li><a href="#">Russian</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="currency">
+                                            <a href="#"> USd <i class="icon-right ion-ios-arrow-down"></i></a>
+                                            <ul class="dropdown_currency">
+                                                <li><a href="#">€ Euro</a></li>
+                                                <li><a href="#">£ Pound Sterling</a></li>
+                                                <li><a href="#">$ US Dollar</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </header>
+    <!--header area end-->
+    <!--breadcrumbs area start-->
+    <div class="breadcrumbs_area breadcrumbs_other">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content text-center">
+                        <ul>
+                            <li><a href="index.html">home</a></li>
+                            <li><a href="#">pages</a></li>
+                        </ul>
+                        <h3>Shopping Cart</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--breadcrumbs area end-->
+    <!--shopping cart area start -->
+    <div class="shopping_cart_area">
+        <div class="container">
+            <form action="#">
+                <div class="cart_page_inner mb-60">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="cart_page_tabel">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>product </th>
+                                            <th>information</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr class="border-top" id="@item.Id">
+                                                <td>
+                                                    <div class="cart_product_thumb">
+                                                        <img src="/images/banners/@item.ImageName" alt="@item.Title">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="cart_product_text">
+                                                        <h4>@item.Title</h4>
+                                                        <ul>
+                                                            <li><i class="ion-ios-arrow-right"></i> Color : <span>White</span></li>
+                                                            <li><i class="ion-ios-arrow-right"></i> Size : <span>XL</span></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="cart_product_price">
+                                                        <span>@item.Price.GetValueOrDefault().ToString()</span>
+                                                    </div>
+                                                </td>
+                                                <td class="product_quantity">
+                                                    <div class="cart_product_quantity">
+                                                        <input min="1" max="100" value="1" type="number" onchange="updateCart(@item.Id,$(this).val())">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="cart_product_price">
+                                                        <span>@item.RowSumPrice.GetValueOrDefault().ToString()</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="cart_product_remove text-right">
+                                                        <a onclick="updateCart(@item.Id,0)"><i class="ion-android-close"></i></a>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="cart_page_button border-top d-flex justify-content-between">
+                                <div class="shopping_cart_btn">
+                                    <a href="/cart/ClearCart" class="btn btn-primary border">CLEAR SHOPPING CART</a>
+                                    <a href="/Cart" class="btn btn-primary border">UPDATE YOUR CART</a>
+
+                                </div>
+                                <div class="shopping_continue_btn">
+                                    <a href="/products" class="btn btn-primary border">CONTINUE SHOPPING</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--coupon code area start-->
+                <div class="cart_page_bottom">
+                    <div class="row d-flex justify-content-end">
+
+                        <div class="col-lg-4 col-md-6 col-sm-8">
+                            <div class="grand_totall_area">
+                                <div class="grand_totall_inner border-bottom">
+                                    <div class="cart_subtotal d-flex justify-content-between">
+                                        <p>sub total </p>
+                                        <span>@Model.Sum(x => x.Price)?.ToString()</span>
+                                    </div>
+                                    <div class="cart_grandtotal d-flex justify-content-between">
+                                        <p>grand total</p>
+                                        <span>@Model.Sum(x => x.RowSumPrice)?.ToString()</span>
+                                    </div>
+                                </div>
+                                <div class="proceed_checkout_btn">
+                                    <a class="btn btn-primary" href="/cart/Checkout">Proceed to Checkout</a>
+                                </div>
+                                <a href="#">Checkout with Mutilple Adresses</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--coupon code area end-->
+            </form>
+        </div>
+    </div>
+    <!--shopping cart area end -->
+}
+else
+{
+    <div class="shopping_cart_area" style="">
+        <div class="container">
+            <div class="alert alert-danger" role="alert">Vỏ Hàng Trống!</div>
+        </div>
+    </div>
+}
